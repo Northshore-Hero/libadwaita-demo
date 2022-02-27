@@ -1,5 +1,5 @@
-// Code Developed by Daniel Mattila for Testing GTK-4 only
-// Last Modified December 18, 2021
+// Code Developed by Daniel Mattila for Testing GTK-4 and Libadwaita only
+// Last Modified February 27, 2022
 // Provided as is and may contain errors
 
 use gtk4 as gtk;
