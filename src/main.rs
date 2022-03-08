@@ -5,27 +5,39 @@
 use gtk4 as gtk;
 use libadwaita as adw;
 use adw::prelude::*;
+use std::io::Read;
 
 use adw::{ActionRow, ApplicationWindow, HeaderBar, ExpanderRow};
 use gtk::{Application, Box, ListBox, Orientation, Label, Switch};
 
 fn main() {
-    let app = Application::builder()
-        //.application_id("com.example.FirstAdwaitaApp")
-        .build();
+    std::fs::File::open("data.txt").expect("File Not Found!");
+    let mut file = std::fs::File::open("data.txt").unwrap();
+    let mut contents = String::new();
+    file.read_to_string(&mut contents).unwrap();
+    print!("{}", contents);
 
+    //Build Application
+    let app = Application::builder()
+        .application_id("com.Libadwaita-Example")
+        .build();
+    //When application is started
     app.connect_startup(|_| {
+        //initialize libadwaita, then apply style manager
         adw::init();
         adw::StyleManager::set_color_scheme(&adw::StyleManager::default(), adw::ColorScheme::PreferDark);
         //adw::StyleManager::set_color_scheme(&adw::StyleManager::default(), adw::ColorScheme::PreferLight);
     });
 
+    //Connect the UI
     app.connect_activate(build_ui);
 
+    //Run Application
     app.run();
 
 }
 
+//Function to build User interface
 fn build_ui(app: &Application) {
     let row = ActionRow::builder()
         .activatable(true)
@@ -33,7 +45,7 @@ fn build_ui(app: &Application) {
         .title("Click me")
         .build();
     row.connect_activated(|_| {
-        //eprintln!("Clicked!");
+        eprintln!("Clicked!");
     });
 
     let row2 = ActionRow::builder()
