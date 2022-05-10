@@ -5,18 +5,11 @@
 use gtk4 as gtk;
 use libadwaita as adw;
 use adw::prelude::*;
-use std::io::Read;
 
-use adw::{ActionRow, ApplicationWindow, HeaderBar, ExpanderRow};
+use adw::{ActionRow, ApplicationWindow, HeaderBar};
 use gtk::{Application, Box, ListBox, Orientation, Label, Switch};
 
 fn main() {
-    std::fs::File::open("data.txt").expect("File Not Found!");
-    let mut file = std::fs::File::open("data.txt").unwrap();
-    let mut contents = String::new();
-    file.read_to_string(&mut contents).unwrap();
-    print!("{}", contents);
-
     //Build Application
     let app = Application::builder()
         .application_id("com.Libadwaita-Example")
@@ -89,43 +82,12 @@ fn build_ui(app: &Application) {
     list.append(&row);
     list.append(&row2);
 
-    let row3 = ActionRow::builder()
-        .activatable(true)
-        .selectable(false)
-        .title("Click me")
-        .css_classes(vec![String::from("boxed-list")])
-        .build();
-
-    let row4 = ActionRow::builder()
-        .activatable(true)
-        .selectable(false)
-        .title("Click me")
-        .css_classes(vec![String::from("boxed-list")])
-        //.icon_name()
-        .build();
-
-    let dropdown = ExpanderRow::builder()
-        .expanded(true)
-        .activatable(true)
-        .selectable(true)
-        .margin_end(32)
-        .margin_bottom(32)
-        .margin_start(32)
-        .subtitle("Dropdowns")
-        .css_classes(vec![String::from("boxed-list")])
-        .title("Dropdown")
-        .build();
-
-    dropdown.add_row(&row3);
-    dropdown.add_row(&row4);
-
-
     let mylabel = Label::builder()
         .label("Capitalize String")
         .margin_top(32)
         .margin_end(32)
         .margin_start(32)
-        .css_classes(vec![String::from("error")])
+        .css_classes(vec![String::from("accent")])
         .build();
 
     // Combine the content in a box
@@ -138,7 +100,6 @@ fn build_ui(app: &Application) {
     );
     content.append(&mylabel);
     content.append(&list);
-    content.append(&dropdown);
 
     let window = ApplicationWindow::builder()
         .application(app)
